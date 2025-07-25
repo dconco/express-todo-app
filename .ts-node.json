@@ -1,0 +1,8 @@
+{
+  "ts-node": {
+    "compilerOptions": {
+      "strict": true,
+      "noImplicitAny": true
+    }
+  }
+}
