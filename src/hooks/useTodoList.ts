@@ -1,4 +1,4 @@
-import { Todo } from '../types/todoListInterface'
+import { Todo, TodoListOutput } from '../types/todoListInterface'
 
 const generateTodos = (count: number = 10): Todo[] =>
 	Array.from({ length: count }, (_, i) => ({
@@ -9,31 +9,32 @@ const generateTodos = (count: number = 10): Todo[] =>
 
 let todos: Todo[] = generateTodos()
 
-export const useTodoList = () => {
-  const getTodos = () => todos;
+export const useTodoList = (): TodoListOutput => {
+	const getTodos = (): Todo[] => todos
 
-  const addTodo = (title: string) => {
-    const newTodo = { id: Date.now(), title, completed: false };
-    todos.push(newTodo);
-    return newTodo;
-  };
+	const addTodo = (title: string): Todo => {
+		const newTodo = { id: Date.now(), title, completed: false }
+		todos.push(newTodo)
+		return newTodo
+	}
 
-  const updateTodo = (id: number, updates: Partial<Todo>) => {
-    const index = todos.findIndex(todo => todo.id === id);
-    if (index !== -1) {
-      todos[index] = { ...todos[index], ...updates };
-      return todos[index];
-    }
-    return null;
-  };
+	const updateTodo = (id: number, updates: Partial<Todo>): boolean => {
+		const index = todos.findIndex(todo => todo.id === id)
+		if (index !== -1) {
+			todos[index] = { ...todos[index], ...updates }
+			return true
+		}
+		return false
+	}
 
-  const deleteTodo = (id: number) => {
-    const index = todos.findIndex(todo => todo.id === id);
-    if (index !== -1) {
-      return todos.splice(index, 1)[0];
-    }
-    return null;
-  };
+	const deleteTodo = (id: number): boolean => {
+		const index = todos.findIndex(todo => todo.id === id)
+		if (index !== -1) {
+			todos.splice(index, 1)[0]
+			return true
+		}
+		return false
+	}
 
-  return { getTodos, addTodo, updateTodo, deleteTodo };
-};
+	return { getTodos, addTodo, updateTodo, deleteTodo }
+}

@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
-import { getTodos } from '../hooks/useTodoList'
+import { useTodoList } from '../hooks/useTodoList'
 
-const listTodos = (req: Request, res: Response) => {
+const listTodos = (req: Request, res: Response): void => {
+	const { getTodos } = useTodoList()
 	res.json(getTodos())
 }
 

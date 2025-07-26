@@ -1,6 +1,8 @@
 import { Router } from 'express'
 import { listTodos } from '../controllers/todoController'
 
-export const todoRoutes: string = 'Router()'
+const router: Router = Router()
 
-todoRoutes.get('/', listTodos)
+router.get('/', listTodos)
+
+export default router
