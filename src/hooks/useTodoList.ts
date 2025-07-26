@@ -1,19 +1,21 @@
 import { Todo, TodoListOutput } from '../types/todoListInterface'
+import useTodoStorage from './useTodoStorage'
 
-const generateTodos = (count: number = 10): Todo[] =>
-	Array.from({ length: count }, (_, i) => ({
-		id: i + 1,
-		title: `Todo ${i + 1}`,
-		completed: Math.random() < 0.5,
-	}))
-
-let todos: Todo[] = generateTodos()
+const todos: Todo[] = useTodoStorage()
 
 export const useTodoList = (): TodoListOutput => {
 	const getTodos = (): Todo[] => todos
 
+	const getATodo = (id: number): Todo | null => {
+		const index = todos.findIndex(todo => todo.id === id)
+		if (index !== -1) {
+			return todos[index]
+		}
+		return null
+	}
+
 	const addTodo = (title: string): Todo => {
-		const newTodo = { id: Date.now(), title, completed: false }
+		const newTodo = { id: todos.length + 1, title, completed: false }
 		todos.push(newTodo)
 		return newTodo
 	}
@@ -36,5 +38,5 @@ export const useTodoList = (): TodoListOutput => {
 		return false
 	}
 
-	return { getTodos, addTodo, updateTodo, deleteTodo }
+	return { getTodos, getATodo, addTodo, updateTodo, deleteTodo }
 }
